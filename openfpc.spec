@@ -1,6 +1,6 @@
 %define name openfpc
-%define version 0.5
-%define minor 281
+%define version 0.6
+%define minor 314
 
 Name: %{name}
 Summary: OpenFPC is designed to allow a network traffic capture tool
@@ -10,7 +10,8 @@ License: GPLv3
 Group: Monitoring
 Source: http://openfpc.googlecode.com/files/%{name}-%{version}-%{minor}.tgz
 URL:	http://www.openfpc.org
-Requires: cxtracker, daemonlogger, libdnet, tcpdump, date, mergecap, perl, tshark, apache-mpm-prefork
+#Requires: cxtracker, daemonlogger, libdnet, tcpdump, date, mergecap, perl, tshark, apache-mpm-prefork
+Requires: cxtracker, daemonlogger, libdnet, tcpdump, wireshark-tools, perl, tshark, apache-mpm-prefork
 BuildRoot: %_tmppath/%{name}-%{version}-buildroot
 
 %description
@@ -20,7 +21,9 @@ common SOC (Security Operating Center) designs. To help further explain it's met
 lets cover some common tasks and see how they are executed while looking at a simple diagram.
 
 %prep
-%setup -n %{name}-%{version}-%{minor}
+%setup -q -n %{name}-%{version}-%{minor}
+
+%build
 
 %install
 mkdir -p %{buildroot}%{_sysconfdir}/%{name}
@@ -28,7 +31,9 @@ mkdir -p %{buildroot}%{_initrddir}
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_datadir}/%{name}/www
 mkdir -p %{buildroot}%{_datadir}/%{name}/cgi-bin
-mkdir -p %{buildroot}%{_usr}/lib/perl5/site_perl/%{name}
+
+#/usr/lib/perl5/vendor_perl/5.12.3/OFPC
+mkdir -p %{buildroot}%{_usr}/lib/perl5/site_perl/OFPC
 mkdir -p %{buildroot}%{_sysconfdir}/httpd/conf.d/
 
 mv etc/*.conf %{buildroot}%{_sysconfdir}/%{name}
@@ -37,20 +42,21 @@ mv www/* %{buildroot}%{_datadir}/%{name}/www
 mv cgi-bin/* %{buildroot}%{_datadir}/%{name}/cgi-bin
 mv openfpc* %{buildroot}%{_bindir}
 mv etc/init.d/* %{buildroot}%{_initrddir}
-mv OFPC/* %{buildroot}%{_usr}/lib/perl5/site_perl/%{name}
+mv OFPC/* %{buildroot}%{_usr}/lib/perl5/site_perl/OFPC
 mv etc/openfpc.apache2.site %{buildroot}%{_sysconfdir}/httpd/conf.d/
 
 rm -rf %{buildroot}%{_bindir}/openfpc-install.sh
 
 %post 
-adduser --quiet --system --group --no-create-home --shell /usr/sbin/nologin openfpc
+echo "Adding openfpc user and group"
+adduser --system --user-group --no-create-home --shell /usr/sbin/nologin openfpc
 
 %files
 %defattr(0755,root,root)
 %{_sysconfdir}/%{name}/
 %{_datadir}/%{name}/www/
 %{_datadir}/%{name}/cgi-bin/
-%{_usr}/lib/perl5/site_perl/%{name}
+%{_usr}/lib/perl5/site_perl/OFPC
 %{_sysconfdir}/httpd/conf.d/openfpc.apache2.site
 %{_initrddir}/openfpc-cx2db
 %{_initrddir}/openfpc-cxtracker
