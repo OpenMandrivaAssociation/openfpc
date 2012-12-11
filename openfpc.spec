@@ -71,3 +71,15 @@ adduser --system --user-group --no-create-home --shell /usr/sbin/nologin openfpc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+
+%changelog
+* Wed Sep 21 2011 Alexander Barakin <abarakin@mandriva.org> 0.6-1mdv2012.0
++ Revision: 700684
+- imported package openfpc
+
+* Mon Jun 13 2011 Leonardo Coelho <leonardoc@mandriva.com> 0.5-1
++ Revision: 684495
+- first mdv version
+- Created package structure for openfpc.
+
