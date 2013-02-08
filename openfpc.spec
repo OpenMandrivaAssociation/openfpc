@@ -5,20 +5,21 @@
 Name: %{name}
 Summary: OpenFPC is designed to allow a network traffic capture tool
 Version: %{version}
-Release: %mkrel 1
+Release: 2
 License: GPLv3
 Group: Monitoring
 Source: http://openfpc.googlecode.com/files/%{name}-%{version}-%{minor}.tgz
 URL:	http://www.openfpc.org
 #Requires: cxtracker, daemonlogger, libdnet, tcpdump, date, mergecap, perl, tshark, apache-mpm-prefork
 Requires: cxtracker, daemonlogger, libdnet, tcpdump, wireshark-tools, perl, tshark, apache-mpm-prefork
-BuildRoot: %_tmppath/%{name}-%{version}-buildroot
 
 %description
-OpenFPC is designed to allow a network traffic capture tool to scale in both horizontal, and vertical directions.
-It is a distributed system linked together using communication paths and proxies to integrate with 
-common SOC (Security Operating Center) designs. To help further explain it's method of deployment and architecture, 
-lets cover some common tasks and see how they are executed while looking at a simple diagram.
+OpenFPC is designed to allow a network traffic capture tool to scale in both
+horizontal, and vertical directions. It is a distributed system linked together
+using communication paths and proxies to integrate with common SOC
+(Security Operating Center) designs. To help further explain it's method of
+deployment and architecture, lets cover some common tasks and see how they
+are executed while looking at a simple diagram.
 
 %prep
 %setup -q -n %{name}-%{version}-%{minor}
