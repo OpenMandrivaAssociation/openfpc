@@ -2,6 +2,8 @@
 %define version 0.6
 %define minor 314
 
+%define debug_package %{nil}
+
 Name: %{name}
 Summary: OpenFPC is designed to allow a network traffic capture tool
 Version: %{version}
@@ -71,7 +73,6 @@ adduser --system --user-group --no-create-home --shell /usr/sbin/nologin openfpc
 
 
 %clean
-rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
