@@ -1,19 +1,23 @@
-%define name openfpc
-%define version 0.6
-%define minor 314
-
+%define _enable_debug_packages %{nil}
 %define debug_package %{nil}
 
-Name: %{name}
-Summary: OpenFPC is designed to allow a network traffic capture tool
-Version: %{version}
-Release: 2
-License: GPLv3
-Group: Monitoring
-Source: http://openfpc.googlecode.com/files/%{name}-%{version}-%{minor}.tgz
-URL:	http://www.openfpc.org
-#Requires: cxtracker, daemonlogger, libdnet, tcpdump, date, mergecap, perl, tshark, apache-mpm-prefork
-Requires: cxtracker, daemonlogger, libdnet, tcpdump, wireshark-tools, perl, tshark, apache-mpm-prefork
+%define minor 314
+
+Summary:	OpenFPC is designed to allow a network traffic capture tool
+Name:		openfpc
+Version:	0.6
+Release:	3
+License:	GPLv3+
+Group:		Monitoring
+Url:		http://www.openfpc.org
+Source0:	http://openfpc.googlecode.com/files/%{name}-%{version}-%{minor}.tgz
+Requires:	apache-mpm-prefork
+Requires:	cxtracker
+Requires:	daemonlogger
+Requires:	libdnet-utils
+Requires:	tcpdump
+Requires:	tshark
+Requires:	wireshark-tools
 
 %description
 OpenFPC is designed to allow a network traffic capture tool to scale in both
@@ -23,8 +27,33 @@ using communication paths and proxies to integrate with common SOC
 deployment and architecture, lets cover some common tasks and see how they
 are executed while looking at a simple diagram.
 
+%files
+%defattr(0755,root,root)
+%{_sysconfdir}/%{name}/
+%{_datadir}/%{name}/www/
+%{_datadir}/%{name}/cgi-bin/
+%{_usr}/lib/perl5/site_perl/OFPC
+%{_sysconfdir}/httpd/conf.d/openfpc.apache2.site
+%{_initrddir}/openfpc-cx2db
+%{_initrddir}/openfpc-cxtracker
+%{_initrddir}/openfpc-daemonlogger
+%{_initrddir}/openfpc-queued
+%{_bindir}/openfpc
+%{_bindir}/openfpc-client
+%{_bindir}/openfpc-cx2db
+%{_bindir}/openfpc-dbmaint
+%{_bindir}/openfpc-queued
+
+%post
+echo "Adding openfpc user and group"
+adduser --system --user-group --no-create-home --shell /usr/sbin/nologin openfpc
+
+#----------------------------------------------------------------------------
+
 %prep
 %setup -q -n %{name}-%{version}-%{minor}
+
+find . -name .svn | xargs rm -rf
 
 %build
 
@@ -49,39 +78,4 @@ mv OFPC/* %{buildroot}%{_usr}/lib/perl5/site_perl/OFPC
 mv etc/openfpc.apache2.site %{buildroot}%{_sysconfdir}/httpd/conf.d/
 
 rm -rf %{buildroot}%{_bindir}/openfpc-install.sh
-
-%post 
-echo "Adding openfpc user and group"
-adduser --system --user-group --no-create-home --shell /usr/sbin/nologin openfpc
-
-%files
-%defattr(0755,root,root)
-%{_sysconfdir}/%{name}/
-%{_datadir}/%{name}/www/
-%{_datadir}/%{name}/cgi-bin/
-%{_usr}/lib/perl5/site_perl/OFPC
-%{_sysconfdir}/httpd/conf.d/openfpc.apache2.site
-%{_initrddir}/openfpc-cx2db
-%{_initrddir}/openfpc-cxtracker
-%{_initrddir}/openfpc-daemonlogger
-%{_initrddir}/openfpc-queued
-%{_bindir}/openfpc
-%{_bindir}/openfpc-client
-%{_bindir}/openfpc-cx2db
-%{_bindir}/openfpc-dbmaint
-%{_bindir}/openfpc-queued
-
-
-%clean
-
-
-%changelog
-* Wed Sep 21 2011 Alexander Barakin <abarakin@mandriva.org> 0.6-1mdv2012.0
-+ Revision: 700684
-- imported package openfpc
-
-* Mon Jun 13 2011 Leonardo Coelho <leonardoc@mandriva.com> 0.5-1
-+ Revision: 684495
-- first mdv version
-- Created package structure for openfpc.
 
