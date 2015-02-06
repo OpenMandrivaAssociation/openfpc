@@ -6,7 +6,7 @@
 Summary:	OpenFPC is designed to allow a network traffic capture tool
 Name:		openfpc
 Version:	0.6
-Release:	3
+Release:	4
 License:	GPLv3+
 Group:		Monitoring
 Url:		http://www.openfpc.org
