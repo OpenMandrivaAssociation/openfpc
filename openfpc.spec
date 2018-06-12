@@ -2,6 +2,7 @@
 %define debug_package %{nil}
 # minor not needed. (penguin)
 #define minor 314
+%define oname OpenFPC
 
 Summary:	OpenFPC is designed to allow a network traffic capture tool
 Name:		openfpc
@@ -51,7 +52,7 @@ adduser --system --user-group --no-create-home --shell /usr/sbin/nologin openfpc
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q -n OpenFPC-%{version}
+%setup -qn %{oname}-%{version}
 
 find . -name .svn | xargs rm -rf
 
