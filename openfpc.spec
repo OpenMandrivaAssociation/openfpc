@@ -69,6 +69,8 @@ mkdir -p %{buildroot}%{_datadir}/%{name}/cgi-bin
 mkdir -p %{buildroot}%{_usr}/lib/perl5/site_perl/OFPC
 mkdir -p %{buildroot}%{_sysconfdir}/httpd/conf.d/
 
+mv etc/openfpc.cgi.apache2.conf %{buildroot}%{_sysconfdir}/httpd/conf.d/
+mv etc/openfpc.gui.apache2.conf %{buildroot}%{_sysconfdir}/httpd/conf.d/
 mv etc/*.conf %{buildroot}%{_sysconfdir}/%{name}
 mv etc/*.ofpc %{buildroot}%{_sysconfdir}/%{name}
 mv www/* %{buildroot}%{_datadir}/%{name}/www
@@ -76,7 +78,6 @@ mv cgi-bin/* %{buildroot}%{_datadir}/%{name}/cgi-bin
 mv openfpc* %{buildroot}%{_bindir}
 mv etc/init.d/* %{buildroot}%{_initrddir}
 mv OFPC/* %{buildroot}%{_usr}/lib/perl5/site_perl/OFPC
-mv etc/openfpc.apache2.site %{buildroot}%{_sysconfdir}/httpd/conf.d/
 
 rm -rf %{buildroot}%{_bindir}/openfpc-install.sh
 
