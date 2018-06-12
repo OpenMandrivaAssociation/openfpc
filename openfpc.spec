@@ -51,7 +51,7 @@ adduser --system --user-group --no-create-home --shell /usr/sbin/nologin openfpc
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q -n %{name}-%{version}-%{minor}
+%setup -q -n %{name}-%{version}
 
 find . -name .svn | xargs rm -rf
 
