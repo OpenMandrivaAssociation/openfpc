@@ -11,7 +11,7 @@ Release:	1
 License:	GPLv3+
 Group:		Monitoring
 Url:		http://www.openfpc.org
-Source0:	https://github.com/leonward/OpenFPC/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/leonward/OpenFPC/archive/%{version}/%{oname}-%{version}.tar.gz
 Requires:	apache-mpm-prefork
 Requires:	cxtracker
 Requires:	daemonlogger
