@@ -1,16 +1,16 @@
 %define _enable_debug_packages %{nil}
 %define debug_package %{nil}
-
-%define minor 314
+# minor not needed. (penguin)
+#define minor 314
 
 Summary:	OpenFPC is designed to allow a network traffic capture tool
 Name:		openfpc
-Version:	0.6
-Release:	4
+Version:	0.9
+Release:	1
 License:	GPLv3+
 Group:		Monitoring
 Url:		http://www.openfpc.org
-Source0:	http://openfpc.googlecode.com/files/%{name}-%{version}-%{minor}.tgz
+Source0:	https://github.com/leonward/OpenFPC/archive/%{version}/%{name}-%{version}.tar.gz
 Requires:	apache-mpm-prefork
 Requires:	cxtracker
 Requires:	daemonlogger
