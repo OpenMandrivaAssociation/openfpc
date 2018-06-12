@@ -34,7 +34,7 @@ are executed while looking at a simple diagram.
 %{_datadir}/%{name}/www/
 %{_datadir}/%{name}/cgi-bin/
 %{_usr}/lib/perl5/site_perl/OFPC
-%{_sysconfdir}/httpd/conf.d/openfpc.apache2.site
+%{_sysconfdir}/httpd/conf.d/*.apache2.conf
 %{_initrddir}/openfpc-cx2db
 %{_initrddir}/openfpc-cxtracker
 %{_initrddir}/openfpc-daemonlogger
@@ -43,6 +43,7 @@ are executed while looking at a simple diagram.
 %{_bindir}/openfpc-client
 %{_bindir}/openfpc-cx2db
 %{_bindir}/openfpc-dbmaint
+%{_bindir}/openfpc-password
 %{_bindir}/openfpc-queued
 
 %post
