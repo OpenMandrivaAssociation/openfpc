@@ -19,6 +19,7 @@ Requires:	libdnet-utils
 Requires:	tcpdump
 Requires:	tshark
 Requires:	wireshark-tools
+Requires: perl-Date-Simple
 
 %description
 OpenFPC is designed to allow a network traffic capture tool to scale in both
