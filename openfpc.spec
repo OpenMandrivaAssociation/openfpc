@@ -1,16 +1,17 @@
 %define _enable_debug_packages %{nil}
 %define debug_package %{nil}
-
-%define minor 314
+# minor not needed. (penguin)
+#define minor 314
+%define oname OpenFPC
 
 Summary:	OpenFPC is designed to allow a network traffic capture tool
 Name:		openfpc
-Version:	0.6
-Release:	4
+Version:	0.9
+Release:	1
 License:	GPLv3+
 Group:		Monitoring
 Url:		http://www.openfpc.org
-Source0:	http://openfpc.googlecode.com/files/%{name}-%{version}-%{minor}.tgz
+Source0:	https://github.com/leonward/OpenFPC/archive/%{version}/%{oname}-%{version}.tar.gz
 Requires:	apache-mpm-prefork
 Requires:	cxtracker
 Requires:	daemonlogger
@@ -18,6 +19,8 @@ Requires:	libdnet-utils
 Requires:	tcpdump
 Requires:	tshark
 Requires:	wireshark-tools
+Requires: perl-Date-Simple
+Requires: perl-Privileges-Drop
 
 %description
 OpenFPC is designed to allow a network traffic capture tool to scale in both
@@ -33,7 +36,7 @@ are executed while looking at a simple diagram.
 %{_datadir}/%{name}/www/
 %{_datadir}/%{name}/cgi-bin/
 %{_usr}/lib/perl5/site_perl/OFPC
-%{_sysconfdir}/httpd/conf.d/openfpc.apache2.site
+%{_sysconfdir}/httpd/conf.d/*.apache2.conf
 %{_initrddir}/openfpc-cx2db
 %{_initrddir}/openfpc-cxtracker
 %{_initrddir}/openfpc-daemonlogger
@@ -42,6 +45,7 @@ are executed while looking at a simple diagram.
 %{_bindir}/openfpc-client
 %{_bindir}/openfpc-cx2db
 %{_bindir}/openfpc-dbmaint
+%{_bindir}/openfpc-password
 %{_bindir}/openfpc-queued
 
 %post
@@ -51,7 +55,7 @@ adduser --system --user-group --no-create-home --shell /usr/sbin/nologin openfpc
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q -n %{name}-%{version}-%{minor}
+%setup -qn %{oname}-%{version}
 
 find . -name .svn | xargs rm -rf
 
@@ -68,6 +72,8 @@ mkdir -p %{buildroot}%{_datadir}/%{name}/cgi-bin
 mkdir -p %{buildroot}%{_usr}/lib/perl5/site_perl/OFPC
 mkdir -p %{buildroot}%{_sysconfdir}/httpd/conf.d/
 
+mv etc/openfpc.cgi.apache2.conf %{buildroot}%{_sysconfdir}/httpd/conf.d/
+mv etc/openfpc.gui.apache2.conf %{buildroot}%{_sysconfdir}/httpd/conf.d/
 mv etc/*.conf %{buildroot}%{_sysconfdir}/%{name}
 mv etc/*.ofpc %{buildroot}%{_sysconfdir}/%{name}
 mv www/* %{buildroot}%{_datadir}/%{name}/www
@@ -75,7 +81,6 @@ mv cgi-bin/* %{buildroot}%{_datadir}/%{name}/cgi-bin
 mv openfpc* %{buildroot}%{_bindir}
 mv etc/init.d/* %{buildroot}%{_initrddir}
 mv OFPC/* %{buildroot}%{_usr}/lib/perl5/site_perl/OFPC
-mv etc/openfpc.apache2.site %{buildroot}%{_sysconfdir}/httpd/conf.d/
 
 rm -rf %{buildroot}%{_bindir}/openfpc-install.sh
 
